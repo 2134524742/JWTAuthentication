@@ -1,3 +1,4 @@
+using JWTAuthentication.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,21 +34,17 @@ namespace JWTAuthentication
             {
                 option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
+                    // 是否开启签名认证
                     ValidateIssuerSigningKey = true,
-                    //发行者签名的密钥 加密解密Token的密钥
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("abcdABCD1234abcdABCD1234")),
-                    //是否验证发布者
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenConst.SECRETKEY)),
+                    // 发行人验证，这里要和token类中Claim类型的发行人保持一致
                     ValidateIssuer = true,
-                    //发布者名称
-                    ValidIssuer = "server",
-                    //是否验证订阅者
+                    ValidIssuer = "API",//发行人
+                    // 接收人验证
                     ValidateAudience = true,
-                    //订阅者名称
-                    ValidAudience = "client007",
-                    //是否验证令牌有效期
+                    ValidAudience = "User",//订阅人
                     ValidateLifetime = true,
-                    //每次颁发，令牌有效时间
-                    ClockSkew = TimeSpan.FromMinutes(120)
+                    ClockSkew = TimeSpan.Zero,
                 };
 
             });
@@ -56,6 +53,30 @@ namespace JWTAuthentication
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWTAuthentication", Version = "v1" });
+                //swagger 验证功能
+                c.AddSecurityDefinition("CoreAPI", new OpenApiSecurityScheme
+                {
+                    Description = "JWT授权(数据将在请求头中进行传输) 在下方输入Bearer {token} 即可，注意两者之间有空格",
+                    //jwt默认的参数名称
+                    Name = "authorization",
+                    //jwt默认存放Authorization信息的位置(请求头中)
+                    In =  ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+                //添加请求
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        {
+                            {
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference {
+                                        Type = ReferenceType.SecurityScheme,
+                                        Id = "CoreAPI"
+                                    }
+                                },
+                                new string[] { }
+                            }
+                        });
             });
         }
 
@@ -69,11 +90,22 @@ namespace JWTAuthentication
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthentication v1"));
             }
 
+            app.Use(async (context, next) =>
+            {
+                foreach (var item in context.Request.Headers)
+                {
+                    Console.WriteLine(item);
+                }
+                await next.Invoke();
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
             //用户认证
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

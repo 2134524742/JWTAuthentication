@@ -13,7 +13,6 @@ E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Microsoft.Iden
 E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
 E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
-E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Microsoft.OpenApi.dll
 E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -33,3 +32,5 @@ E:\souceWord\JWTAuthentication\JWTAuthentication\obj\Debug\net5.0\JWTAuthenticat
 E:\souceWord\JWTAuthentication\JWTAuthentication\obj\Debug\net5.0\ref\JWTAuthentication.dll
 E:\souceWord\JWTAuthentication\JWTAuthentication\obj\Debug\net5.0\JWTAuthentication.pdb
 E:\souceWord\JWTAuthentication\JWTAuthentication\obj\Debug\net5.0\JWTAuthentication.genruntimeconfig.cache
+E:\souceWord\JWTAuthentication\JWTAuthentication\bin\Debug\net5.0\Microsoft.OpenApi.dll
+E:\souceWord\JWTAuthentication\JWTAuthentication\obj\Debug\net5.0\JWTAuthentication.csprojAssemblyReference.cache
